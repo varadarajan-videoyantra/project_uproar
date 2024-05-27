@@ -6,3 +6,4 @@ Prereqsuite : insatll ffmpeg package and add it to the system environament.
 4. Execute the Highlight_Generator.py  using : python Highlight_Generator.py
 
 Note: once the step 2 is executed all segmented audio file will be present in Audio_Segment folder which can be used for MEL Spectograph analysis.
+      link to ffmpeg : https://www.geeksforgeeks.org/how-to-install-ffmpeg-on-windows/
