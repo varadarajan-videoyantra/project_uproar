@@ -4,7 +4,7 @@ import subprocess
 import shlex
 import pandas as pd
 
-df = pd.read_csv('prediction.csv')
+df = pd.read_csv('../prediction.csv')
 df = df[['Audio ID', 'Finalprediction']]
 newdf = df.query('Finalprediction == 1')
 # print(newdf)
