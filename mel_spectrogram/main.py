@@ -95,3 +95,30 @@ df['Finalprediction'] = predicted_values
 print(df.head(50))
 
 df.to_csv('../prediction.csv')
+
+audio_path = '../serve-vocal-noise-rem-only.aac'
+scale, sampling_rate = librosa.load(audio_path)
+
+mel_spectrograms = list()
+for interval in range(num_intervals):
+    # Define the start and end index for the current interval
+    start_index = interval * interval_length * sampling_rate
+    end_index = (interval + 1) * interval_length * sampling_rate
+
+    # Get the audio slice for the current interval
+    interval_audio = scale[start_index:end_index]
+
+    # Obtain the Mel spectrogram for the interval
+    interval_mel_spec = librosa.feature.melspectrogram(y=interval_audio, sr=sampling_rate, n_fft=2048, hop_length=512, n_mels=10)
+
+    interval_log_mel_spec = librosa.power_to_db(interval_mel_spec)
+
+    # Append the Mel spectrogram to the list
+    mel_spectrograms.append(interval_log_mel_spec)
+
+predictions = model.predict(mel_spectrograms)
+
+predicted_values = np.argmax(prediction, axis=1)
+
+df_serving = pd.DataFrame()
+
